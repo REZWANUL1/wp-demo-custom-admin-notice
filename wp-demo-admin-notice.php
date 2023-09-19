@@ -17,11 +17,11 @@
 if (!defined('ABSPATH')) {
    exit;
 }
-function load_my_plugin_translation()
+function wdan_load_my_plugin_translation()
 {
    load_plugin_textdomain('your-plugin-textdomain', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 }
-add_action('plugins_loaded', 'load_my_plugin_translation');
+add_action('plugins_loaded', 'wdan_load_my_plugin_translation');
 
 
 
@@ -29,5 +29,18 @@ add_action('admin_notices', 'wdan_custom_admin_notice');
 function wdan_custom_admin_notice()
 {
 
-   
+   if (!(isset($_COOKIE['dc-close']) && $_COOKIE['dc-close'] == 1)) {
+?>
+      <div id="wdan_notice_success" class="notice notice-success is-dismissible">
+         <p>Hey,Here is notice for you </p>
+      </div>
+<?php
+   }
+}
+
+add_action('admin_enqueue_scripts', 'wdan_enqueue_files');
+
+function wdan_enqueue_files()
+{
+   wp_enqueue_script('wdan_enqueue_js', plugin_dir_url(__FILE__) . 'inc/notice.js', array('jquery'), time(), true);
 }
