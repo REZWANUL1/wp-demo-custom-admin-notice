@@ -15,10 +15,19 @@
  * Domain Path:       /languages
  */
 if (!defined('ABSPATH')) {
-exit;
+   exit;
 }
 function load_my_plugin_translation()
 {
-load_plugin_textdomain('your-plugin-textdomain', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+   load_plugin_textdomain('your-plugin-textdomain', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 }
 add_action('plugins_loaded', 'load_my_plugin_translation');
+
+
+
+add_action('admin_notices', 'wdan_custom_admin_notice');
+function wdan_custom_admin_notice()
+{
+
+   
+}
