@@ -28,13 +28,20 @@ add_action('plugins_loaded', 'wdan_load_my_plugin_translation');
 add_action('admin_notices', 'wdan_custom_admin_notice');
 function wdan_custom_admin_notice()
 {
-
+   global $pagenow;
    if (!(isset($_COOKIE['dc-close']) && $_COOKIE['dc-close'] == 1)) {
+      if (in_array($pagenow, ['plugins.php'])) {
+         $remote_notice = wp_remote_get('example.come');
+         $remote_body = wp_remote_retrieve_body($remote_notice);
+         // if ($remote_body !== "") {
 ?>
-      <div id="wdan_notice_success" class="notice notice-success is-dismissible">
-         <p>Hey,Here is notice for you </p>
-      </div>
+            <div id="wdan_notice_success" class="notice notice-success is-dismissible">
+               <p>Hey,Here is notice for you </p>
+               <!-- <p><?php echo $remote_body; ?></p> -->
+            </div>
 <?php
+         // }
+      }
    }
 }
 
